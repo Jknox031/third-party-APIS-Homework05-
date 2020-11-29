@@ -1,16 +1,13 @@
-$(document).ready(function () {// tells document what to load first.
-    //display current day & time.
-    $("#currentDay").text(moment().format("MMMM Do YYYY, h:mm:ss a"));
+$(document).ready(function () {    
 
-    //Assign saveBtn click listener for user input
-    $(".saveBtn").on("click", function () {
+    $(".saveBtn").on("click",function(){   
         
-        console.log(this);
-        var text = $(this).siblings(".description").val();
-        var time = $(this).parent().attr("id");
-
-        //set items in local storage.
-        localStorage.setItem(time, text);
+        var calenderInput = $(this).siblings(".description").val() 
+        
+        var selectedTime = $(this).parent().attr("id") 
+        
+        localStorage.setItem(selectedTime, calenderInput) 
+        console.log("this is logged")
     })
     //load any saved data from LocalStorage .
     $("#hour9 .description").val(localStorage.getItem("hour9"));
@@ -23,40 +20,52 @@ $(document).ready(function () {// tells document what to load first.
     $("#hour16 .description").val(localStorage.getItem("hour16"));
     $("#hour17 .description").val(localStorage.getItem("hour17"));
     $("#hour18 .description").val(localStorage.getItem("hour18"));
-    $("#hour19 .description").val(localStorage.getItem("hour19"));
-    $("#hour20 .description").val(localStorage.getItem("hour20"));
-    $("#hour21 .description").val(localStorage.getItem("hour21"));
-    $("#hour22 .description").val(localStorage.getItem("hour22"));
-    $("#hour23 .description").val(localStorage.getItem("hour23"));
-    $("#hour24 .description").val(localStorage.getItem("hour24"));
+    
 
 
-    function hourTracker() {
+    function updateTimeBlock() {
         
         var currentHour = moment().hour();
 
        
         $(".time-block").each(function () {
-            var blockHour = parseInt($(this).attr("id").split("hour")[1]);
-            console.log( blockHour, currentHour)
+            var calenderTime = parseInt($(this).attr("id").split("hour")[1]);
+           
 
             
-            if (blockHour < currentHour) {
+            if (calenderTime < currentHour) {
                 $(this).addClass("past");
-                $(this).removeClass("future");
-                $(this).removeClass("present");
+               
             }
-            else if (blockHour === currentHour) {
+            else if (calenderTime === currentHour) {
                 $(this).removeClass("past");
                 $(this).addClass("present");
-                $(this).removeClass("future");
+                
             }
             else {
+                $(this).addClass("future");
                 $(this).removeClass("present");
                 $(this).removeClass("past");
-                $(this).addClass("future");
+                
             }
         })
     }
-    hourTracker();
+    updateTimeBlock();
 })
+
+$("#currentDay").text(moment().format("MMMM Do YYYY"));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
